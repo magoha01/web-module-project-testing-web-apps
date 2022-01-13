@@ -10,11 +10,13 @@ test('renders without errors', ()=>{
 });
 
 test('renders the contact form header', () => {
-    const header = screen.queryByText(/Contact Form/);
+    render(<ContactForm />);
 
-    //expect(header).toBeInTheDocument();
-    //expect(header).toBeTruthy();
-    // expect(header).not.toBeNull();
+    const header = screen.queryByText(/Contact Form/i);
+        
+    expect(header).toBeInTheDocument();
+    expect(header).toBeTruthy();
+    expect(header).not.toBeNull();
     
 });
 
