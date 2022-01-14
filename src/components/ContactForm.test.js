@@ -60,7 +60,11 @@ import ContactForm from './ContactForm';
 //     const email = screen.getByLabelText(/Email*/);
 //     userEvent.type(email, null);
 
+//     const submit = screen.getByRole("button");
+//     userEvent.click(submit);
 
+//     const errors = await screen.findAllByTestId("error");
+//     expect(errors).toHaveLength(1);
 
 // });
 
@@ -69,7 +73,7 @@ import ContactForm from './ContactForm';
 //     render(<ContactForm/>);
 //     const email = screen.getByLabelText(/Email*/);
 //     userEvent.type(email, "emailatemaildotcom");
-//     const emailError = await screen.queryByText(/email must be a valid email address/);
+//     const emailError = await screen.findByText(/email must be a valid email address/);
 //     expect(emailError).toBeInTheDocument();
 
 // });
@@ -106,16 +110,16 @@ import ContactForm from './ContactForm';
 //     userEvent.type(lastName, "lastName");
 
 //     const message = screen.getByLabelText(/Message/);
-//     userEvent.type(message, null);
+//     userEvent.type(message, '');
 
 //     const submit = screen.getByRole("button");
 //     userEvent.click(submit);
 
 
 //     waitFor(async ()=> {
-//         const firstNameOutput = screen.queryByText(firstName);
-//         const lastNameOutput = screen.queryByText(lastName);
-//         const emailOutput = screen.queryByText(email);
+//         const firstNameOutput = screen.queryByText("firstName");
+//         const lastNameOutput = screen.queryByText("lastName");
+//         const emailOutput = screen.queryByText("email@email.com");
 //         const messageOutput = screen.queryByText(message);
 
 //         expect(firstNameOutput).toBeInTheDocument();
@@ -137,37 +141,47 @@ import ContactForm from './ContactForm';
 //     });
 // });
 
-// test('renders all fields text when all fields are submitted.', async () => {
-//     render(<ContactForm/>);
+test('renders all fields text when all fields are submitted.', async () => {
+    render(<ContactForm/>);
 
-//     const firstName = screen.getByLabelText(/First Name*/);
-//     userEvent.type(firstName, "firstName");
+    const firstName = screen.getByLabelText(/First Name*/);
+    userEvent.type(firstName, "firstName");
 
-//     const email = screen.getByLabelText(/Email*/);
-//     userEvent.type(email, "email@email.com");
+    const email = screen.getByLabelText(/Email*/);
+    userEvent.type(email, "email@email.com");
 
-//     const lastName = screen.getByLabelText(/Last Name*/);
-//     userEvent.type(lastName, null);
+    const lastName = screen.getByLabelText(/Last Name*/);
+    userEvent.type(lastName, "lastName");
 
-//     const button = screen.getByRole("button");
-//     userEvent.click(button);
+    const message = screen.getByLabelText(/Message/);
+    userEvent.type(message, "this is a message");
 
-//     waitFor(async ()=> {
-//         const firstNameOutput = screen.queryByText(firstName);
-//         const lastNameOutput = screen.queryByText(lastName);
-//         const emailOutput = screen.queryByText(email);
 
-//         expect(firstNameOutput).toBeInTheDocument();
-//         expect(lastNameOutput).toBeTruthy();
-//         expect(emailOutput).not.toBeNull();
+    const button = screen.getByRole("button");
+    userEvent.click(button);
 
-//         expect(firstNameOutput).toBeInTheDocument();
-//         expect(lastNameOutput).toBeTruthy();
-//         expect(emailOutput).not.toBeNull();
+    waitFor(async ()=> {
 
-//         expect(firstNameOutput).toBeInTheDocument();
-//         expect(lastNameOutput).toBeTruthy();
-//         expect(emailOutput).not.toBeNull();
-//     });
+        const firstNameOutput = screen.queryByText('firstName');
+        const lastNameOutput = screen.queryByText('lastName');
+        const emailOutput = screen.queryByText("email@email.com");
+        const messageOutput = screen.queryByText('this is a message');
 
-// });
+        expect(firstNameOutput).toBeInTheDocument();
+        expect(firstNameOutput).toBeTruthy();
+        expect(firstNameOutput).not.toBeNull();
+
+        expect(lastNameOutput).toBeInTheDocument();
+        expect(lastNameOutput).toBeTruthy();
+        expect(lastNameOutput).not.toBeNull();
+
+        expect(emailOutput).toBeInTheDocument();
+        expect(emailOutput).toBeTruthy();
+        expect(emailOutput).not.toBeNull();
+
+        expect(messageOutput).toBeInTheDocument();
+        expect(messageOutput).toBeTruthy();
+        expect(messageOutput).not.toBeNull();
+});
+
+});
